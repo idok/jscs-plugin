@@ -8,6 +8,6 @@ out/
 *.iml
 
 ### plugin binary ###
-jscs-plugin.jar
+jscs-plugin.zip
 
 temp

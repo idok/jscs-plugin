@@ -1,0 +1,13 @@
+### OSX ###
+.DS_Store
+
+### intellij ###
+.idea/
+out/
+
+*.iml
+
+### plugin binary ###
+jscs-plugin.jar
+
+temp

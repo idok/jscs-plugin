@@ -1,0 +1,63 @@
+<idea-plugin version="2" url="https://github.com/idok/eslint-plugin">
+    <id>com.wix.jscs</id>
+    <name>jscs</name>
+    <version>1.0.0</version>
+    <vendor email="sir_simon_x@yahoo.com" url="https://github.com/idok/jscs-plugin">Ido</vendor>
+    <category>HTML/JavaScript Development</category>
+    <description><![CDATA[
+      jscs intellij integration.<br>
+      <p>Support displaying jscs warnings as intellij inspections</p>
+    ]]></description>
+
+    <change-notes><![CDATA[
+       <p>1.0.0 First version.</p>
+    ]]></change-notes>
+
+    <depends>com.intellij.modules.lang</depends>
+    <!--<depends>com.intellij.modules.platform</depends>-->
+    <depends>JavaScript</depends>
+
+    <!-- please see http://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for description -->
+    <idea-version since-build="131"/>
+
+    <!-- please see http://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+        <projectService serviceImplementation="com.jscs.settings.Settings"/>
+        <projectConfigurable implementation="com.jscs.settings.JscsSettingsPage"/>
+        <localInspection language="JavaScript" groupPath="JavaScript" shortName="JscsInspection"
+                         enabledByDefault="true" level="ERROR"
+                         bundle="com.jscs.JscsBundle"
+                         implementationClass="com.jscs.JscsInspection"
+                         displayName="JSCS" groupKey="eslint.inspection.group.name"/>
+        <!--unfair="true" runForWholeFile="true" level="WARNING" -->
+        <externalAnnotator language="JavaScript" implementationClass="com.jscs.JscsExternalAnnotator" />
+
+        <!-- annotate .jscsrc -->
+        <projectService serviceImplementation="com.jscs.config.JscsConfigFileListener"/>
+        <fileTypeFactory implementation="com.jscs.config.JscsConfigFileTypeFactory"/>
+        <!--<completion.contributor order="first" language="JavaScript" implementationClass="com.jscs.config.ESLintConfigCompletionContributor"/>-->
+        <!--<annotator language="JSON" implementationClass="com.jscs.config.ESLintConfigAnnotator"/>-->
+    </extensions>
+
+    <application-components>
+        <!-- Add your application components here -->
+    </application-components>
+
+    <project-components>
+        <!-- Add your project components here -->
+        <component>
+            <implementation-class>com.jscs.JscsProjectComponent</implementation-class>
+        </component>
+    </project-components>
+
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
+
+</idea-plugin>

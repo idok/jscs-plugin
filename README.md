@@ -34,12 +34,7 @@ To get started, you need to set the jscs plugin settings:<br/>
 Configuration:<br/>
 ![jscs config](https://raw.githubusercontent.com/idok/jscs-plugin/master/doc/config.png)
 
-
 Inspection:<br/>
-![jscs inline](https://raw.githubusercontent.com/idok/jscs-plugin/master/doc/inspect-inline.png)
-
-
-Analyze Code:<br/>
 ![jscs inline](https://raw.githubusercontent.com/idok/jscs-plugin/master/doc/inspect.png)
 
 ### A Note to contributors ###

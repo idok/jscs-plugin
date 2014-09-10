@@ -1,4 +1,4 @@
-<idea-plugin version="2" url="https://github.com/idok/eslint-plugin">
+<idea-plugin version="2" url="https://github.com/idok/jscs-plugin">
     <id>com.wix.jscs</id>
     <name>jscs</name>
     <version>1.0.0</version>

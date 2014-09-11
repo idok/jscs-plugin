@@ -1,0 +1,1 @@
+var x<error descr="JSCS: requireSpaceAfterBinaryOperators: Operator = should not stick to following expression (jscs)"><error descr="JSCS: requireSpaceBeforeBinaryOperators: Operator = should not stick to following expression (jscs)">=</error></error>3;

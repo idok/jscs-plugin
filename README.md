@@ -24,11 +24,11 @@ To get started, you need to set the jscs plugin settings:<br/>
 
 * Go to preferences, jscs plugin page and check the Enable plugin.
 * Set the path to the nodejs interpreter bin file.
-* Select whether to let jscs search for ```.jscsrc``` file
-* Set the path to the jscs bin file. should point to ```<project path>node_modules/jscs/bin/jscs.js``` if you installed locally or ```/usr/local/bin/jscs``` if you installed globally.
-  * For Windows: install jscs globally and point to the jscs cmd file like, e.g. ```C:\Users\<username>\AppData\Roaming\npm\jscs.cmd```
-* Set the ```.jscsrc``` file, or jscs will use the default settings.
-* You can also set a path to a custom rules directory.
+* Set the path to the jscs bin file.
+  * On Mac/Unix should point to ```<project path>node_modules/jscs/bin/jscs.js``` if you installed locally or ```/usr/local/bin/jscs``` if you installed globally.
+  * On Windows should point to ```<project path>node_modules/jscs/bin/jscs.cmd``` if you installed locally or ``C:\Users\<username>\AppData\Roaming\npm\jscs.cmd``` if you installed globally.
+* Select whether to let jscs search for ```.jscsrc``` file or set the config file explicitly.
+* You can also set a preset.
 * By default, jscs plugin annotate the editor with warning or error based on the jscs configuration, you can check the 'Treat all jscs issues as warnings' checkbox to display all issues from jscs as warnings.
 
 Configuration:<br/>

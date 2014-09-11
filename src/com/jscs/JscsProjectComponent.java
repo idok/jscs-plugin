@@ -8,6 +8,7 @@ import com.intellij.notification.Notifications;
 import com.intellij.openapi.components.ProjectComponent;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
+import com.jscs.utils.JscsSettings;
 import com.wix.utils.FileUtils;
 import com.wix.utils.FileUtils.ValidationStatus;
 import org.jetbrains.annotations.NotNull;
@@ -25,7 +26,7 @@ public class JscsProjectComponent implements ProjectComponent {
     private static final Logger LOG = Logger.getInstance(JscsBundle.LOG_ID);
 
     public String jscsRcFile;
-    public String customRulesPath;
+    public String preset;
     public String rulesPath;
     public String jscsExecutable;
     public String nodeInterpreter;
@@ -88,10 +89,10 @@ public class JscsProjectComponent implements ProjectComponent {
         if (!status) {
             return false;
         }
-        status = validateField("Rules", settings.rulesPath, false, true, false);
-        if (!status) {
-            return false;
-        }
+//        status = validateField("Rules", settings.preset, false, true, false);
+//        if (!status) {
+//            return false;
+//        }
         status = validateField("JSCS bin", settings.jscsExecutable, false, false, true);
         if (!status) {
             return false;
@@ -112,7 +113,7 @@ public class JscsProjectComponent implements ProjectComponent {
 //        }
         jscsExecutable = settings.jscsExecutable;
         jscsRcFile = settings.jscsrcFile;
-        customRulesPath = settings.rulesPath;
+        preset = settings.preset;
         rulesPath = settings.builtinRulesPath;
         nodeInterpreter = settings.nodeInterpreter;
         treatAsWarnings = settings.treatAllIssuesAsWarnings;

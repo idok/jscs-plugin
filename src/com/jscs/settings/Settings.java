@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
                 @Storage(id = "dir", file = StoragePathMacros.PROJECT_CONFIG_DIR + "/jscsPlugin.xml", scheme = StorageScheme.DIRECTORY_BASED)})
 public class Settings implements PersistentStateComponent<Settings> {
     public String jscsrcFile = JscsFinder.JSCSRC;
-    public String rulesPath = "";
+    public String preset = "";
     public String builtinRulesPath = "";
     public String jscsExecutable = "";
     public String nodeInterpreter;
@@ -39,6 +39,6 @@ public class Settings implements PersistentStateComponent<Settings> {
     }
 
     public String getVersion() {
-        return nodeInterpreter + jscsExecutable + jscsrcFile + rulesPath + builtinRulesPath;
+        return nodeInterpreter + jscsExecutable + jscsrcFile + preset + builtinRulesPath;
     }
 }

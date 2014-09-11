@@ -6,17 +6,17 @@ import org.jetbrains.annotations.Nullable;
 public class JscsSettings {
     public String node;
     public String jscsExecutablePath;
-    public String rules;
+    public String preset;
     public String config;
     public String cwd;
     public String targetFile;
 
-    public static JscsSettings build(@NotNull String cwd, @NotNull String path, @NotNull String nodeInterpreter, @NotNull String jscsBin, @Nullable String jscsrc, @Nullable String rulesdir) {
+    public static JscsSettings build(@NotNull String cwd, @NotNull String path, @NotNull String nodeInterpreter, @NotNull String jscsBin, @Nullable String jscsrc, @Nullable String preset) {
         JscsSettings settings = new JscsSettings();
         settings.cwd = cwd;
         settings.jscsExecutablePath = jscsBin;
         settings.node = nodeInterpreter;
-        settings.rules = rulesdir;
+        settings.preset = preset;
         settings.config = jscsrc;
         settings.targetFile = path;
         return settings;

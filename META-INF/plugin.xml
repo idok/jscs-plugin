@@ -43,7 +43,7 @@
 
         <!-- annotate .jscsrc -->
         <projectService serviceImplementation="com.jscs.config.JscsConfigFileListener"/>
-        <fileTypeFactory implementation="com.jscs.config.JscsConfigFileTypeFactory"/>
+        <!--<fileTypeFactory implementation="com.jscs.config.JscsConfigFileTypeFactory"/>-->
         <!--<completion.contributor order="first" language="JavaScript" implementationClass="com.jscs.config.JscsConfigCompletionContributor"/>-->
         <!--<annotator language="JSON" implementationClass="com.jscs.config.JscsConfigAnnotator"/>-->
     </extensions>

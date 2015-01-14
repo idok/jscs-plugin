@@ -22,7 +22,11 @@ public class JscsLint {
         xstream.useAttributeFor(Issue.class, "column");
         xstream.useAttributeFor(Issue.class, "severity");
         xstream.useAttributeFor(Issue.class, "message");
-        return (JscsLint) xstream.fromXML(xml);
+        JscsLint lint = (JscsLint) xstream.fromXML(xml);
+        if (lint.file.errors == null) {
+            lint.file.errors = new ArrayList<Issue>();
+        }
+        return lint;
     }
 
     public static class File {

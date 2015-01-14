@@ -1,7 +1,7 @@
 <idea-plugin version="2" url="https://github.com/idok/jscs-plugin">
     <id>com.wix.jscs</id>
     <name>jscs</name>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <vendor email="sir_simon_x@yahoo.com" url="https://github.com/idok/jscs-plugin">Ido</vendor>
     <category>JavaScript Development</category>
     <description><![CDATA[
@@ -11,6 +11,7 @@
     ]]></description>
 
     <change-notes><![CDATA[
+       <p>1.0.2 Add support for esnext option for ES6.</p>
        <p>1.0.1 Add preset.</p>
        <p>1.0.0 First version.</p>
     ]]></change-notes>

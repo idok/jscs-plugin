@@ -1,7 +1,6 @@
 package com.jscs.utils;
 
 import com.intellij.execution.ExecutionException;
-import com.intellij.execution.process.ProcessOutput;
 import com.jscs.utils.data.JscsLint;
 import com.jscs.utils.data.LintResult;
 import org.junit.Test;
@@ -15,7 +14,7 @@ public class JscsRunnerTest {
     public static final String JSCS_PLUGIN_ROOT = "/Users/idok/Projects/jscs-plugin";
 
     private static JscsSettings createSettings(String targetFile) {
-        return JscsSettings.build(JSCS_PLUGIN_ROOT + "/testData", targetFile, NODE_INTERPRETER, JSCS_BIN, "", "");
+        return JscsSettings.build(JSCS_PLUGIN_ROOT + "/testData", targetFile, NODE_INTERPRETER, JSCS_BIN, "", "", false);
     }
 
     private static JscsSettings createSettings() {
@@ -39,7 +38,7 @@ public class JscsRunnerTest {
     @Test
     public void testSimpleLint2() {
         JscsSettings settings = createSettings(JSCS_PLUGIN_ROOT + "/testData/test.js");
-        LintResult result = JscsRunner.runLint(settings);
+        LintResult result = JscsRunner.lint(settings);
         System.out.println(result.errorOutput);
         System.out.println(result.jscsLint.file.name);
         System.out.println("found " + result.jscsLint.file.errors.size() + " issues");
@@ -51,10 +50,27 @@ public class JscsRunnerTest {
     }
 
     @Test
+    public void testSimpleLintES6() {
+        String file = JSCS_PLUGIN_ROOT + "/testData/es6.js";
+        JscsSettings settings = createSettings(file);
+        settings.esnext = true;
+        LintResult result = JscsRunner.lint(settings);
+        System.out.println(result.errorOutput);
+        System.out.println(result.jscsLint.file.name);
+        System.out.println("found " + result.jscsLint.file.errors.size() + " issues");
+
+        for (JscsLint.Issue err : result.jscsLint.file.errors) {
+            System.out.println(err.message);
+        }
+        assertEquals("File should match", file, result.jscsLint.file.name);
+        assertEquals("Should be no errors", 0, result.jscsLint.file.errors.size());
+    }
+
+    @Test
     public void testVersion() {
         JscsSettings settings = createSettings();
         try {
-            String version = JscsRunner.runVersion(settings);
+            String version = JscsRunner.version(settings);
             assertEquals("version should be", "1.6.1", version);
         } catch (ExecutionException e) {
             e.printStackTrace();

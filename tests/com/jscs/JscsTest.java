@@ -27,7 +27,7 @@ public class JscsTest extends LightPlatformCodeInsightFixtureTestCase {
         settings.jscsExecutable = JscsRunnerTest.JSCS_BIN;
         settings.jscsrcFile = getTestDataPath() + "/.jscsrc";
         settings.nodeInterpreter = JscsRunnerTest.NODE_INTERPRETER;
-        settings.rulesPath = "";
+        settings.preset = "";
         settings.pluginEnabled = true;
         myFixture.configureByFile(file);
         myFixture.enableInspections(new JscsInspection());

@@ -24,14 +24,14 @@ public final class JscsRunner {
 
     private static final int TIME_OUT = (int) TimeUnit.SECONDS.toMillis(120L);
 
-    @NotNull
-    private static ProcessOutput runLint(@NotNull JscsSettings settings) throws ExecutionException {
-        GeneralCommandLine commandLine = createCommandLineLint(settings);
-        return execute(commandLine, TIME_OUT);
-    }
+//    @NotNull
+//    private static ProcessOutput runLint(@NotNull JscsSettings settings) throws ExecutionException {
+//        GeneralCommandLine commandLine = createCommandLineLint(settings);
+//        return execute(commandLine, TIME_OUT);
+//    }
 
-    public static LintResult lint(@NotNull String cwd, @NotNull String path, @NotNull String nodeInterpreter, @NotNull String jscsBin, @Nullable String jscsrc, @Nullable String preset, boolean esnext) {
-        JscsSettings settings = JscsSettings.build(cwd, path, nodeInterpreter, jscsBin, jscsrc, preset, esnext);
+    public static LintResult lint(@NotNull String cwd, @NotNull String path, @NotNull String nodeInterpreter, @NotNull String jscsBin, @Nullable String jscsrc, @Nullable String preset, boolean esnext, String esprima) {
+        JscsSettings settings = JscsSettings.build(cwd, path, nodeInterpreter, jscsBin, jscsrc, preset, esprima, esnext);
         return lint(settings);
     }
 
@@ -98,6 +98,7 @@ public final class JscsRunner {
         addParam(commandLine, "reporter", "checkstyle");
         commandLine.addParameter("-v");
         addParamIfExist(commandLine, "preset", settings.preset);
+        addParamIfExist(commandLine, "esprima", settings.esprima);
         if (settings.esnext) {
             commandLine.addParameter("--esnext");
         }

@@ -15,18 +15,18 @@ import org.jetbrains.annotations.Nullable;
 public class Settings implements PersistentStateComponent<Settings> {
     public String jscsrcFile = JscsFinder.JSCSRC;
     public String preset = "";
-    public String builtinRulesPath = "";
     public String jscsExecutable = "";
     public String nodeInterpreter;
     public boolean treatAllIssuesAsWarnings;
     public boolean pluginEnabled;
     public boolean esnext;
+    public String esprima;
 
     public boolean isEqualTo(Settings settings) {
         return settings != null && esnext == settings.esnext && pluginEnabled == settings.pluginEnabled &&
                 treatAllIssuesAsWarnings == settings.treatAllIssuesAsWarnings &&
-                Strings.areEqual(builtinRulesPath, settings.builtinRulesPath) &&
                 Strings.areEqual(jscsExecutable, settings.jscsExecutable) &&
+                Strings.areEqual(esprima, settings.esprima) &&
                 Strings.areEqual(jscsrcFile, settings.jscsrcFile) &&
                 Strings.areEqual(nodeInterpreter, settings.nodeInterpreter) &&
                 Strings.areEqual(preset, settings.preset);
@@ -39,6 +39,7 @@ public class Settings implements PersistentStateComponent<Settings> {
         settings.preset = preset;
         settings.config = jscsrcFile;
         settings.esnext = esnext;
+        settings.esprima = esprima;
         return settings;
     }
 
@@ -62,6 +63,6 @@ public class Settings implements PersistentStateComponent<Settings> {
     }
 
     public String getVersion() {
-        return nodeInterpreter + jscsExecutable + jscsrcFile + preset + builtinRulesPath + esnext;
+        return nodeInterpreter + jscsExecutable + jscsrcFile + preset + esnext + esprima;
     }
 }

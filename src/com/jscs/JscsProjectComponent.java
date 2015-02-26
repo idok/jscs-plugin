@@ -27,13 +27,12 @@ public class JscsProjectComponent implements ProjectComponent {
 
     public String jscsRcFile;
     public String preset;
-    public String rulesPath;
     public String jscsExecutable;
     public String nodeInterpreter;
     public boolean treatAsWarnings;
     public boolean pluginEnabled;
 
-    public static final String PLUGIN_NAME = "JSCS plugin";
+    public static final String PLUGIN_NAME = "JSCS";
 
     public JscsProjectComponent(Project project) {
         this.project = project;
@@ -80,6 +79,10 @@ public class JscsProjectComponent implements ProjectComponent {
         return settingValidStatus;
     }
 
+    public boolean shouldLint() {
+        return isEnabled() && isSettingsValid();
+    }
+
     public boolean validateSettings() {
         // do not validate if disabled
         if (!settings.pluginEnabled) {
@@ -89,19 +92,10 @@ public class JscsProjectComponent implements ProjectComponent {
         if (!status) {
             return false;
         }
-//        status = validateField("Rules", settings.preset, false, true, false);
-//        if (!status) {
-//            return false;
-//        }
         status = validateField("JSCS bin", settings.jscsExecutable, false, false, true);
         if (!status) {
             return false;
         }
-        status = validateField("Builtin rules", settings.builtinRulesPath, false, true, false);
-        if (!status) {
-            return false;
-        }
-
 //        if (StringUtil.isNotEmpty(settings.jscsExecutable)) {
 //            File file = new File(project.getBasePath(), settings.jscsExecutable);
 //            if (!file.exists()) {
@@ -114,13 +108,9 @@ public class JscsProjectComponent implements ProjectComponent {
         jscsExecutable = settings.jscsExecutable;
         jscsRcFile = settings.jscsrcFile;
         preset = settings.preset;
-        rulesPath = settings.builtinRulesPath;
         nodeInterpreter = settings.nodeInterpreter;
         treatAsWarnings = settings.treatAllIssuesAsWarnings;
         pluginEnabled = settings.pluginEnabled;
-
-//        RuleCache.initializeFromPath(project, this);
-
         settingValidStatus = true;
         return true;
     }
@@ -168,6 +158,10 @@ public class JscsProjectComponent implements ProjectComponent {
         }
     }
 
+    public void showWarn(String content) {
+        showInfoNotification(content, NotificationType.WARNING);
+    }
+
     public void showInfoNotification(String content, NotificationType type) {
         Notification errorNotification = new Notification(PLUGIN_NAME, PLUGIN_NAME, content, type);
         Notifications.Bus.notify(errorNotification, this.project);
@@ -181,5 +175,9 @@ public class JscsProjectComponent implements ProjectComponent {
     public static void showNotification(String content, NotificationType type) {
         Notification errorNotification = new Notification(PLUGIN_NAME, PLUGIN_NAME, content, type);
         Notifications.Bus.notify(errorNotification);
+    }
+
+    public static void showError(String content) {
+        showNotification(content, NotificationType.ERROR);
     }
 }

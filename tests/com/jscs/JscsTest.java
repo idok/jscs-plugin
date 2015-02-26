@@ -21,11 +21,11 @@ public class JscsTest extends LightPlatformCodeInsightFixtureTestCase {
         return false;
     }
 
-    protected void doTest(final String file) {
+    protected void doTest(final String file, String rc) {
         Project project = myFixture.getProject();
         Settings settings = Settings.getInstance(project);
         settings.jscsExecutable = JscsRunnerTest.JSCS_BIN;
-        settings.jscsrcFile = getTestDataPath() + "/.jscsrc";
+        settings.jscsrcFile = rc; //getTestDataPath() + "/.jscsrc";
         settings.nodeInterpreter = JscsRunnerTest.NODE_INTERPRETER;
         settings.preset = "";
         settings.pluginEnabled = true;
@@ -36,30 +36,14 @@ public class JscsTest extends LightPlatformCodeInsightFixtureTestCase {
 
     protected void doTest() {
         String name = getTestName(true).replaceAll("_", "-");
-        doTest("/inspections/" + name + ".js");
+        doTest("/inspections/" + name + ".js", "");
     }
 
     public void testRequireSpaceBeforeBinaryOperators() {
         doTest();
     }
 
-    public void testNo_negated_in_lhs() {
-        doTest();
-    }
-
-    public void testValid_typeof() {
-        doTest();
-    }
-
-    public void testNo_lonely_if() {
-        doTest();
-    }
-
-    public void testNo_new_object() {
-        doTest();
-    }
-
-    public void testNo_array_constructor() {
+    public void testValidateIndentation() {
         doTest();
     }
 }

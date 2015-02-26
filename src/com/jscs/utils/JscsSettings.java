@@ -11,9 +11,11 @@ public class JscsSettings {
     public String cwd;
     public String targetFile;
     public boolean esnext;
+    public String esprima;
 
     public static JscsSettings build(@NotNull String cwd, @NotNull String path, @NotNull String nodeInterpreter,
-                                     @NotNull String jscsBin, @Nullable String jscsrc, @Nullable String preset, boolean esnext) {
+                                     @NotNull String jscsBin, @Nullable String jscsrc, @Nullable String preset, @Nullable String esprima,
+                                     boolean esnext) {
         JscsSettings settings = new JscsSettings();
         settings.cwd = cwd;
         settings.jscsExecutablePath = jscsBin;
@@ -22,6 +24,7 @@ public class JscsSettings {
         settings.config = jscsrc;
         settings.targetFile = path;
         settings.esnext = esnext;
+        settings.esprima = esprima;
         return settings;
     }
 }

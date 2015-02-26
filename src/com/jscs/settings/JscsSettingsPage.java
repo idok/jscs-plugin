@@ -61,24 +61,17 @@ public class JscsSettingsPage implements Configurable {
     private JCheckBox treatAllIssuesCheckBox;
     private JLabel versionLabel;
     private JCheckBox esnextCheckBox;
+    private JTextField esprimaField;
     private final PackagesNotificationPanel packagesNotificationPanel;
 
     public JscsSettingsPage(@NotNull final Project project) {
         this.project = project;
         configBinField();
         configJscsRcField();
-//        configRulesField();
         configNodeField();
-//        searchForJscsrcInRadioButton.addItemListener(new ItemListener() {
-//            public void itemStateChanged(ItemEvent e) {
-//                jscsrcFile.setEnabled(e.getStateChange() == ItemEvent.DESELECTED);
-//                System.out.println("searchForJscsrcInRadioButton: " + (e.getStateChange() == ItemEvent.SELECTED ? "checked" : "unchecked"));
-//            }
-//        });
         useProjectJscsrcRadioButton.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
                 jscsrcFile.setEnabled(e.getStateChange() == ItemEvent.SELECTED);
-//                System.out.println("useProjectJscsrcRadioButton: " + (e.getStateChange() == ItemEvent.SELECTED ? "checked" : "unchecked"));
             }
         });
         pluginEnabledCheckbox.addItemListener(new ItemListener() {
@@ -89,9 +82,6 @@ public class JscsSettingsPage implements Configurable {
         });
 
         this.packagesNotificationPanel = new PackagesNotificationPanel(project);
-//        GridConstraints gridConstraints = new GridConstraints(5, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
-//                GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW,
-//                null, new Dimension(250, 150), null);
         errorPanel.add(this.packagesNotificationPanel.getComponent(), BorderLayout.CENTER);
 
         DocumentAdapter docAdp = new DocumentAdapter() {
@@ -130,18 +120,17 @@ public class JscsSettingsPage implements Configurable {
     private void setEnabledState(boolean enabled) {
         jscsrcFile.setEnabled(enabled);
         presetField.setEnabled(enabled);
-//        rulesPathField.setEnabled(enabled);
         searchForJscsrcInRadioButton.setEnabled(enabled);
         useProjectJscsrcRadioButton.setEnabled(enabled);
         jscsBinField.setEnabled(enabled);
         nodeInterpreterField.setEnabled(enabled);
         jscsConfigFilePathLabel.setEnabled(enabled);
         rulesDirectoryLabel.setEnabled(enabled);
-//        rulesDirectoryLabel1.setEnabled(enabled);
         pathToJscsBinLabel.setEnabled(enabled);
         nodeInterpreterLabel.setEnabled(enabled);
         treatAllIssuesCheckBox.setEnabled(enabled);
         esnextCheckBox.setEnabled(enabled);
+        esprimaField.setEnabled(enabled);
     }
 
     private void validateField(List<ValidationInfo> errors, TextFieldWithHistoryWithBrowseButton field, boolean allowEmpty, String message) {
@@ -159,14 +148,6 @@ public class JscsSettingsPage implements Configurable {
         validateField(errors, jscsBinField, false, "Path to jscs is invalid {{LINK}}");
         validateField(errors, jscsrcFile, true, "Path to jscsrc is invalid {{LINK}}"); //Please correct path to
         validateField(errors, nodeInterpreterField, false, "Path to node interpreter is invalid {{LINK}}");
-//        if (!validateDirectory(presetField.getText(), true)) {
-//            JscsValidationInfo error = new JscsValidationInfo(presetField, "Path to custom rules is invalid {{LINK}}", FIX_IT);
-//            errors.add(error);
-//        }
-//        if (!validateDirectory(rulesPathField.getChildComponent().getText(), true)) {
-//            JscsValidationInfo error = new JscsValidationInfo(rulesPathField.getChildComponent().getTextEditor(), "Path to rules is invalid {{LINK}}", FIX_IT);
-//            errors.add(error);
-//        }
         if (errors.isEmpty()) {
             try {
                 packagesNotificationPanel.removeAllLinkHandlers();
@@ -186,7 +167,6 @@ public class JscsSettingsPage implements Configurable {
         if (settings != null &&
             areEqual(nodeInterpreterField, settings.node) &&
             areEqual(jscsBinField, settings.jscsExecutablePath) &&
-            settings.esnext == esnextCheckBox.isSelected() &&
             settings.cwd.equals(project.getBasePath())
                 ) {
             return;
@@ -257,17 +237,6 @@ public class JscsSettingsPage implements Configurable {
         });
         SwingHelper.installFileCompletionAndBrowseDialog(project, jscsBinField, "Select jscs.js cli", FileChooserDescriptorFactory.createSingleFileNoJarsDescriptor());
     }
-
-//    private void configRulesField() {
-//        TextFieldWithHistory textFieldWithHistory = rulesPathField.getChildComponent();
-//        SwingHelper.addHistoryOnExpansion(textFieldWithHistory, new NotNullProducer<List<String>>() {
-//            @NotNull
-//            public List<String> produce() {
-//                return JscsFinder.tryFindRulesAsString(getProjectPath());
-//            }
-//        });
-//        SwingHelper.installFileCompletionAndBrowseDialog(project, rulesPathField, "Select Built in rules", FileChooserDescriptorFactory.createSingleFileNoJarsDescriptor());
-//    }
 
     private void configJscsRcField() {
         TextFieldWithHistory textFieldWithHistory = configWithDefaults(jscsrcFile);
@@ -351,8 +320,8 @@ public class JscsSettingsPage implements Configurable {
         settings.nodeInterpreter = nodeInterpreterField.getChildComponent().getText();
         settings.jscsrcFile = getJscsRCFile();
         settings.preset = presetField.getText();
+        settings.esprima = esprimaField.getText();
         settings.esnext = esnextCheckBox.isSelected();
-//        settings.builtinRulesPath = rulesPathField.getChildComponent().getText();
         settings.treatAllIssuesAsWarnings = treatAllIssuesCheckBox.isSelected();
     }
 
@@ -363,7 +332,7 @@ public class JscsSettingsPage implements Configurable {
         jscsrcFile.getChildComponent().setText(settings.jscsrcFile);
         nodeInterpreterField.getChildComponent().setText(settings.nodeInterpreter);
         presetField.setText(settings.preset);
-//        rulesPathField.getChildComponent().setText(settings.builtinRulesPath);
+        esprimaField.setText(settings.esprima);
         useProjectJscsrcRadioButton.setSelected(StringUtils.isNotEmpty(settings.jscsrcFile));
         searchForJscsrcInRadioButton.setSelected(StringUtils.isEmpty(settings.jscsrcFile));
         jscsrcFile.setEnabled(useProjectJscsrcRadioButton.isSelected());

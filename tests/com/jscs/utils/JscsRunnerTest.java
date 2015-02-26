@@ -14,7 +14,7 @@ public class JscsRunnerTest {
     public static final String JSCS_PLUGIN_ROOT = "/Users/idok/Projects/jscs-plugin";
 
     private static JscsSettings createSettings(String targetFile) {
-        return JscsSettings.build(JSCS_PLUGIN_ROOT + "/testData", targetFile, NODE_INTERPRETER, JSCS_BIN, "", "", false);
+        return JscsSettings.build(JSCS_PLUGIN_ROOT + "/testData", targetFile, NODE_INTERPRETER, JSCS_BIN, "", "", "", false);
     }
 
     private static JscsSettings createSettings() {
@@ -54,6 +54,23 @@ public class JscsRunnerTest {
         String file = JSCS_PLUGIN_ROOT + "/testData/es6.js";
         JscsSettings settings = createSettings(file);
         settings.esnext = true;
+        LintResult result = JscsRunner.lint(settings);
+        System.out.println(result.errorOutput);
+        System.out.println(result.jscsLint.file.name);
+        System.out.println("found " + result.jscsLint.file.errors.size() + " issues");
+
+        for (JscsLint.Issue err : result.jscsLint.file.errors) {
+            System.out.println(err.message);
+        }
+        assertEquals("File should match", file, result.jscsLint.file.name);
+        assertEquals("Should be no errors", 0, result.jscsLint.file.errors.size());
+    }
+
+    @Test
+    public void testSimpleLintJSX() {
+        String file = JSCS_PLUGIN_ROOT + "/testData/jsx.js";
+        JscsSettings settings = createSettings(file);
+        settings.esprima = "esprima-fb";
         LintResult result = JscsRunner.lint(settings);
         System.out.println(result.errorOutput);
         System.out.println(result.jscsLint.file.name);

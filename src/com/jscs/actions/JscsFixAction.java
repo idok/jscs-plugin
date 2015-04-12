@@ -10,11 +10,7 @@ import com.jscs.JscsExternalAnnotator;
 import com.jscs.JscsProjectComponent;
 import com.jscs.cli.JscsRunner;
 import com.jscs.cli.data.LintResult;
-import com.jscs.config.JscsConfigFileListener;
-import com.wix.ActualFile2;
 import org.jetbrains.annotations.NotNull;
-
-import java.io.File;
 
 public class JscsFixAction extends AnAction {
 
@@ -26,7 +22,7 @@ public class JscsFixAction extends AnAction {
         return false;
     }
 
-    public static boolean isJscsFile(VirtualFile file) {
+    public static boolean isJSFile(VirtualFile file) {
         return file.getExtension() != null && file.getExtension().equals("js");
     }
 
@@ -34,10 +30,10 @@ public class JscsFixAction extends AnAction {
     public void update(@NotNull AnActionEvent e) {
         boolean enabled = false;
         Project project = CommonDataKeys.PROJECT.getData(e.getDataContext());
-        boolean rtEnabled = isJscsEnabled(project);
+        boolean pluginEnabled = isJscsEnabled(project);
         if (project != null) {
             final VirtualFile file = (VirtualFile) e.getDataContext().getData(DataConstants.VIRTUAL_FILE);
-            enabled = rtEnabled && isJscsFile(file); // || isRtFileContext(e.getDataContext()));
+            enabled = pluginEnabled && isJSFile(file); // || isRtFileContext(e.getDataContext()));
             if (file != null) {
                 e.getPresentation().setText("JSCS Fix '" + file.getName() + '\'');
             }

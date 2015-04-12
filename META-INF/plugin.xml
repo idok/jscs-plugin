@@ -7,7 +7,10 @@
     <description><![CDATA[
       jscs intellij integration.<br>
       <p>Support displaying jscs warnings as intellij inspections</p>
+      <p>Support for fixing javascript using --fix</p>
       <p>Support presets</p>
+      <p>Support esnext</p>
+      <p>Support custom esprima</p>
     ]]></description>
 
     <change-notes><![CDATA[

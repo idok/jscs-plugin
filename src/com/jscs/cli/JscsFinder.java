@@ -1,4 +1,4 @@
-package com.jscs.utils;
+package com.jscs.cli;
 
 import com.intellij.openapi.util.Condition;
 import com.intellij.openapi.util.SystemInfo;
@@ -69,7 +69,6 @@ public final class JscsFinder {
 
     /**
      * find possible jscs rc files
-     *
      * @param projectRoot
      * @return
      */
@@ -89,11 +88,10 @@ public final class JscsFinder {
         });
     }
 
-
-//                List<File> newFiles = NodeDetectionUtil.listPossibleJscsExe();
-//                return ContainerUtil.map(newFiles, new Function<File, String>() {
-//                    public String fun(File file) {
-//                        return file.getAbsolutePath();
-//                    }
-//                });
+    //  List<File> newFiles = NodeDetectionUtil.listPossibleJscsExe();
+    //  return ContainerUtil.map(newFiles, new Function<File, String>() {
+    //      public String fun(File file) {
+    //          return file.getAbsolutePath();
+    //      }
+    //  });
 }

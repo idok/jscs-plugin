@@ -1,4 +1,4 @@
-package com.jscs.utils;
+package com.jscs.cli;
 
 import com.google.common.base.Charsets;
 import com.intellij.execution.ExecutionException;
@@ -8,8 +8,8 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.SystemInfo;
 import com.intellij.openapi.util.text.StringUtil;
-import com.jscs.utils.data.JscsLint;
-import com.jscs.utils.data.LintResult;
+import com.jscs.cli.data.JscsLint;
+import com.jscs.cli.data.LintResult;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -23,6 +23,9 @@ public final class JscsRunner {
     private static final Logger LOG = Logger.getInstance(JscsRunner.class);
 
     private static final int TIME_OUT = (int) TimeUnit.SECONDS.toMillis(120L);
+    private static final String FIX = "--fix";
+    private static final String VERSION = "--fix";
+
 
 //    @NotNull
 //    private static ProcessOutput runLint(@NotNull JscsSettings settings) throws ExecutionException {
@@ -49,6 +52,31 @@ public final class JscsRunner {
                 //result.errorOutput = out.getStdout();
             }
 //        }
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.errorOutput = e.toString();
+        }
+        return result;
+    }
+
+    public static LintResult fix(@NotNull String cwd, @NotNull String path, @NotNull String nodeInterpreter, @NotNull String jscsBin, @Nullable String jscsrc, @Nullable String preset, boolean esnext, String esprima) {
+        JscsSettings settings = JscsSettings.build(cwd, path, nodeInterpreter, jscsBin, jscsrc, preset, esprima, esnext);
+        return fix(settings);
+    }
+
+    public static LintResult fix(@NotNull JscsSettings settings) {
+        LintResult result = new LintResult();
+        try {
+            GeneralCommandLine commandLine = createCommandLineLint(settings);
+            commandLine.addParameter("--fix");
+            ProcessOutput out = execute(commandLine, TIME_OUT);
+            result.errorOutput = out.getStderr();
+            try {
+                result.jscsLint = JscsLint.read(out.getStdout());
+            } catch (Exception e) {
+                LOG.error(e);
+                //result.errorOutput = out.getStdout();
+            }
         } catch (Exception e) {
             e.printStackTrace();
             result.errorOutput = e.toString();

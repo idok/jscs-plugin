@@ -1,8 +1,10 @@
 package com.jscs.utils;
 
 import com.intellij.execution.ExecutionException;
-import com.jscs.utils.data.JscsLint;
-import com.jscs.utils.data.LintResult;
+import com.jscs.cli.JscsRunner;
+import com.jscs.cli.JscsSettings;
+import com.jscs.cli.data.JscsLint;
+import com.jscs.cli.data.LintResult;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

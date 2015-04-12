@@ -8,7 +8,6 @@ import com.intellij.notification.Notifications;
 import com.intellij.openapi.components.ProjectComponent;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
-import com.jscs.utils.JscsSettings;
 import com.wix.utils.FileUtils;
 import com.wix.utils.FileUtils.ValidationStatus;
 import org.jetbrains.annotations.NotNull;
@@ -18,7 +17,7 @@ import javax.swing.event.HyperlinkEvent;
 public class JscsProjectComponent implements ProjectComponent {
     public static final String FIX_CONFIG_HREF = "\n<a href=\"#\">Fix Configuration</a>";
     protected Project project;
-    protected Settings settings;
+    public Settings settings;
     protected boolean settingValidStatus;
     protected String settingValidVersion;
     protected String settingVersionLastShowNotification;

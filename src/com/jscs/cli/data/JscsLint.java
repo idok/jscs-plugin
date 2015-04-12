@@ -1,4 +1,4 @@
-package com.jscs.utils.data;
+package com.jscs.cli.data;
 
 import com.thoughtworks.xstream.XStream;
 

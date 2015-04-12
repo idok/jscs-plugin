@@ -1,10 +1,10 @@
 package com.jscs.settings;
 
-import com.jscs.utils.JscsFinder;
+import com.jscs.cli.JscsFinder;
 import com.intellij.openapi.components.*;
 import com.intellij.openapi.project.Project;
 import com.intellij.util.xmlb.XmlSerializerUtil;
-import com.jscs.utils.JscsSettings;
+import com.jscs.cli.JscsSettings;
 import com.wix.utils.Strings;
 import org.jetbrains.annotations.Nullable;
 

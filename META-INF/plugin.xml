@@ -1,8 +1,8 @@
 <idea-plugin version="2" url="https://github.com/idok/jscs-plugin">
     <id>com.wix.jscs</id>
     <name>jscs</name>
-    <version>1.0.3</version>
-    <vendor email="sir_simon_x@yahoo.com" url="https://github.com/idok/jscs-plugin">Ido</vendor>
+    <version>1.0.4</version>
+    <vendor email="sir_simon_x@yahoo.com" url="https://github.com/idok">Ido</vendor>
     <category>JavaScript Development</category>
     <description><![CDATA[
       jscs intellij integration.<br>
@@ -11,6 +11,7 @@
     ]]></description>
 
     <change-notes><![CDATA[
+       <p>1.0.4 Add support for --fix.</p>
        <p>1.0.3 Add support for esprima option for JSX.</p>
        <p>1.0.2 Add support for esnext option for ES6.</p>
        <p>1.0.1 Add preset.</p>
@@ -62,6 +63,10 @@
 
     <actions>
         <!-- Add your actions here -->
+        <action id="JscsFixAction" class="com.jscs.actions.JscsFixAction" text="Jscs Fix" description="Jscs Fix Action">
+            <add-to-group group-id="CodeMenu" anchor="last"/>
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+        </action>
     </actions>
-
 </idea-plugin>

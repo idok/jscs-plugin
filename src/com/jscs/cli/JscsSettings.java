@@ -1,4 +1,4 @@
-package com.jscs.utils;
+package com.jscs.cli;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

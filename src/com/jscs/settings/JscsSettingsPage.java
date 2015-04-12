@@ -1,8 +1,8 @@
 package com.jscs.settings;
 
 import com.jscs.JscsProjectComponent;
-import com.jscs.utils.JscsFinder;
-import com.jscs.utils.JscsRunner;
+import com.jscs.cli.JscsFinder;
+import com.jscs.cli.JscsRunner;
 import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer;
 import com.intellij.execution.ExecutionException;
 import com.intellij.javascript.nodejs.NodeDetectionUtil;
@@ -11,7 +11,6 @@ import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiManager;
 import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.HyperlinkLabel;
@@ -20,8 +19,9 @@ import com.intellij.ui.TextFieldWithHistoryWithBrowseButton;
 import com.intellij.util.NotNullProducer;
 import com.intellij.util.ui.UIUtil;
 import com.intellij.webcore.ui.SwingHelper;
-import com.jscs.utils.JscsSettings;
+import com.jscs.cli.JscsSettings;
 import com.wix.settings.ValidationInfo;
+import com.wix.settings.ValidationUtils;
 import com.wix.ui.PackagesNotificationPanel;
 import com.wix.utils.FileUtils;
 import org.apache.commons.lang.StringUtils;
@@ -101,6 +101,9 @@ public class JscsSettingsPage implements Configurable {
     }
 
     private File getProjectPath() {
+        if (project == null || project.getBaseDir() == null) {
+            return null;
+        }
         return new File(project.getBaseDir().getPath());
     }
 
@@ -134,7 +137,7 @@ public class JscsSettingsPage implements Configurable {
     }
 
     private void validateField(List<ValidationInfo> errors, TextFieldWithHistoryWithBrowseButton field, boolean allowEmpty, String message) {
-        if (!validatePath(field.getChildComponent().getText(), allowEmpty)) {
+        if (!ValidationUtils.validatePath(project, field.getChildComponent().getText(), allowEmpty)) {
             ValidationInfo error = new ValidationInfo(field.getChildComponent().getTextEditor(), message, FIX_IT);
             errors.add(error);
         }
@@ -181,42 +184,6 @@ public class JscsSettingsPage implements Configurable {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-    }
-
-    private boolean validatePath(String path, boolean allowEmpty) {
-        if (StringUtils.isEmpty(path)) {
-            return allowEmpty;
-        }
-        File filePath = new File(path);
-        if (filePath.isAbsolute()) {
-            if (!filePath.exists() || !filePath.isFile()) {
-                return false;
-            }
-        } else {
-            VirtualFile child = project.getBaseDir().findFileByRelativePath(path);
-            if (child == null || !child.exists() || child.isDirectory()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean validateDirectory(String path, boolean allowEmpty) {
-        if (StringUtils.isEmpty(path)) {
-            return allowEmpty;
-        }
-        File filePath = new File(path);
-        if (filePath.isAbsolute()) {
-            if (!filePath.exists() || !filePath.isDirectory()) {
-                return false;
-            }
-        } else {
-            VirtualFile child = project.getBaseDir().findFileByRelativePath(path);
-            if (child == null || !child.exists() || !child.isDirectory()) {
-                return false;
-            }
-        }
-        return true;
     }
 
     private static TextFieldWithHistory configWithDefaults(TextFieldWithHistoryWithBrowseButton field) {

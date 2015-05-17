@@ -23,7 +23,7 @@ public class JscsFixAction extends AnAction {
     }
 
     public static boolean isJSFile(VirtualFile file) {
-        return file.getExtension() != null && file.getExtension().equals("js");
+        return file != null && file.getExtension() != null && file.getExtension().equals("js");
     }
 
     @Override
